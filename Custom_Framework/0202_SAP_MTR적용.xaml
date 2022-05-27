@@ -1,0 +1,1081 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="_0202_반복_프로세스_예제" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_configDIC" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="in_wbParentPath" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>654,814</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="27">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="30">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Flowchart sap2010:Annotation.AnnotationText="작성할 단위 Step Sequence는 최대한 나눌 수 있는만큼 나눠서 작성함&#xA; - 동일 작업을 여러 번 반복 수행해야 할 경우" DisplayName="0202_단위_프로세스_예제" sap:VirtualizedContainerService.HintSize="634,754" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="targetDT" />
+      <Variable x:TypeArguments="x:String" Name="wbName" />
+      <Variable x:TypeArguments="x:String" Name="wbPath" />
+      <Variable x:TypeArguments="s:DateTime" Name="wbStartTime" />
+      <Variable x:TypeArguments="x:Boolean" Name="isStopYN" />
+      <Variable x:TypeArguments="x:String" Default="\\172.17.1.38\RPA\" Name="sharePTH" />
+      <Variable x:TypeArguments="x:String" Default="C:\RPA\Common\" Name="commonPTH" />
+      <Variable x:TypeArguments="x:String" Name="resultFilePTH" />
+      <Variable x:TypeArguments="x:String" Name="resultColumnNM" />
+      <Variable x:TypeArguments="sd:DataTable" Name="sapMtrDT" />
+    </Flowchart.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+        <av:Size x:Key="ShapeSize">60,75</av:Size>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,117.5</av:PointCollection>
+        <x:Double x:Key="Height">676.5</x:Double>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Flowchart.StartNode>
+      <x:Reference>__ReferenceID3</x:Reference>
+    </Flowchart.StartNode>
+    <FlowStep x:Name="__ReferenceID3">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <av:Point x:Key="ShapeLocation">200,117.5</av:Point>
+          <av:Size x:Key="ShapeSize">200,108</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">300,225.5 300,267.5</av:PointCollection>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Sequence sap2010:Annotation.AnnotationText="해당 단위 프로세스에서 사용될 변수 설정 및 초기화" DisplayName="02-02-01. Configuration" sap:VirtualizedContainerService.HintSize="200,108" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:String" Default="[Path.Combine(sharePTH, &quot;세아제강\포항품질팀\MTR보정치적용\Config\Config.xlsx&quot;)]" Name="shareExcelConfigFilePTH" />
+          <Variable x:TypeArguments="x:String" Default="CONFIG" Name="configAssetNM" />
+        </Sequence.Variables>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:Comment sap:VirtualizedContainerService.HintSize="524,74" sap2010:WorkflowViewState.IdRef="Comment_2" Text="- wbName 수정 필요&#xA;- 해당 Workflow의 이름으로 지정" />
+        <Sequence sap2010:Annotation.AnnotationText="During block startup, information about the path are constructed. It will be passed to any child workblock.&#xA;You should also publish the input arguments that you want to make available in the log" DisplayName="wbStartup" sap:VirtualizedContainerService.HintSize="524,213" sap2010:WorkflowViewState.IdRef="Sequence_12">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap2010:Annotation.AnnotationText="Edit to assign a name of your choosing" DisplayName="Assign workblock its name" sap:VirtualizedContainerService.HintSize="314,102" sap2010:WorkflowViewState.IdRef="Assign_5">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[wbName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">서브 워크플로우 명</InArgument>
+            </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Assign>
+          <Assign sap2010:Annotation.AnnotationText="Create current workblock path. This will be passed to children wb, if any" DisplayName="Create workblock path" sap:VirtualizedContainerService.HintSize="314,102" sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[wbPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[if (string.IsNullOrEmpty(in_wbParentPath), wbName, in_wbParentPath+"|"+wbName)]</InArgument>
+            </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Assign>
+          <Assign sap2010:Annotation.AnnotationText="Assign template start time. " DisplayName="Assign start time" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="Assign_7">
+            <Assign.To>
+              <OutArgument x:TypeArguments="s:DateTime">[wbStartTime]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="s:DateTime">[datetime.Now]</InArgument>
+            </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Assign>
+          <ui:AddLogFields sap2010:Annotation.AnnotationText="Default wb fields&#xA;wbName&#xA;wbParentName&#xA;wbKey&#xA;wbPath&#xA;wbLevel&#xA;wbStartTime&#xA;wbState" DisplayName="Publish default wb fields" sap:VirtualizedContainerService.HintSize="314,154" sap2010:WorkflowViewState.IdRef="AddLogFields_1">
+            <ui:AddLogFields.Fields>
+              <InArgument x:TypeArguments="x:String" x:Key="wbName">[wbName]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="wbParentName">[if(wbPath.Count(Function(x) x="|") = 0, string.Empty, wbPath.Split("|".ToCharArray)(wbPath.Count(Function(x) x="|")-1))]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="wbKey">[Guid.NewGuid.ToString]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="wbPath">[wbPath]</InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="wbLevel">[wbPath.Count(Function(x) x="|")]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="wbState">Executing</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="wbStartTime">[wbStartTime.ToString("yyyyMMdd HH:mm:ss.fff")]</InArgument>
+            </ui:AddLogFields.Fields>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:AddLogFields>
+          <ui:AddLogFields sap2010:Annotation.AnnotationText="Publish input fields" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="314,49" sap2010:WorkflowViewState.IdRef="AddLogFields_2">
+            <ui:AddLogFields.Fields>
+              <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+            </ui:AddLogFields.Fields>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:AddLogFields>
+          <ui:LogMessage DisplayName="Log execution started message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[wbPath + &quot; execution started.&quot;]" />
+        </Sequence>
+        <TryCatch DisplayName="Try Catch - 기본 폴더 위치 가져오기" sap:VirtualizedContainerService.HintSize="524,655" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+          <TryCatch.Try>
+            <Sequence DisplayName="Sequence - 기본 폴더 위치 가져오기" sap:VirtualizedContainerService.HintSize="486,406" sap2010:WorkflowViewState.IdRef="Sequence_25">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="COMMON_PATH" DisplayName="Get Asset - Common 파일 경로" sap:VirtualizedContainerService.HintSize="444,137" sap2010:WorkflowViewState.IdRef="GetRobotAsset_3">
+                <ui:GetRobotAsset.Value>
+                  <OutArgument x:TypeArguments="x:String">[commonPTH]</OutArgument>
+                </ui:GetRobotAsset.Value>
+              </ui:GetRobotAsset>
+              <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="SHARE_PATH" DisplayName="Get Asset - 공유폴더 파일 경로" sap:VirtualizedContainerService.HintSize="444,137" sap2010:WorkflowViewState.IdRef="GetRobotAsset_4">
+                <ui:GetRobotAsset.Value>
+                  <OutArgument x:TypeArguments="x:String">[sharePTH]</OutArgument>
+                </ui:GetRobotAsset.Value>
+              </ui:GetRobotAsset>
+            </Sequence>
+          </TryCatch.Try>
+          <TryCatch.Catches>
+            <Catch x:TypeArguments="ui:OrchestratorHttpException" sap:VirtualizedContainerService.HintSize="490,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ActivityAction x:TypeArguments="ui:OrchestratorHttpException">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:OrchestratorHttpException" Name="exception" />
+                </ActivityAction.Argument>
+                <If Condition="[exception.Message.Contains(&quot;Could not find an asset with this name&quot;)]" DisplayName="If - Config Asset이 미존재하여 에러 발생하였는지 확인" sap:VirtualizedContainerService.HintSize="713,249" sap2010:WorkflowViewState.IdRef="If_6">
+                  <If.Then>
+                    <ui:LogMessage DisplayName="Log Message - Asset명에 해당하는 Asset이 미존재" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn" Message="[&quot;Asset이 존재하지 않습니다. Asset명을 확인하십시오.&quot;]" />
+                  </If.Then>
+                  <If.Else>
+                    <ui:LogMessage DisplayName="Log Message - Orchestrator 연결 에러" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Warn" Message="[&quot;ORC 연결 상태를 확인하십시오. &quot;]" />
+                  </If.Else>
+                </If>
+              </ActivityAction>
+            </Catch>
+            <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="490,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ActivityAction x:TypeArguments="s:Exception">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                </ActivityAction.Argument>
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Warn" Message="[&quot;Asset에서 Common 파일 경로 및 공유 폴더 경로를 가져오는데 실패하였습니다.&quot;]" />
+              </ActivityAction>
+            </Catch>
+          </TryCatch.Catches>
+        </TryCatch>
+        <If Condition="[in_configDIC is Nothing]" DisplayName="If - Config Dictionary가 비어 있을 경우 설정" sap:VirtualizedContainerService.HintSize="524,376" sap2010:WorkflowViewState.IdRef="If_5">
+          <If.Then>
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="*** Argument 수정 필요 ***&#xA;- in_configAssetNM : Config Asset명&#xA;- in_shareExcelConfigFilePTH : 공유폴더의 Config Excel 파일 위치&#xA;- in_excelPW : Config Excel 파일 암호(없으면 Null)" DisplayName="Invoke workflow file - Config 파일 읽어오기" sap:VirtualizedContainerService.HintSize="379,199" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="[Path.Combine(sharePTH, &quot;Common\XAML\GET_CONFIG.xaml&quot;)]">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_shareExcelConfigFilePTH">[shareExcelConfigFilePTH]</InArgument>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_configDIC">[in_configDIC]</OutArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_configAssetNM">CONFIG</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_excelPW">[String.Empty]</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:InvokeWorkflowFile>
+          </If.Then>
+        </If>
+        <Assign DisplayName="Assign - 처리결과를 저장할 컬럼명 지정" sap:VirtualizedContainerService.HintSize="524,60" sap2010:WorkflowViewState.IdRef="Assign_13">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[resultColumnNM]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">처리결과</InArgument>
+          </Assign.Value>
+        </Assign>
+      </Sequence>
+      <FlowStep.Next>
+        <FlowStep x:Name="__ReferenceID1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <av:Point x:Key="ShapeLocation">200,267.5</av:Point>
+              <av:Size x:Key="ShapeSize">200,108</av:Size>
+              <av:PointCollection x:Key="ConnectorLocation">300,375.5 300,410.5</av:PointCollection>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence sap2010:Annotation.AnnotationText="실제 데이터 처리에 필요한 프로세스 부분 구현" DisplayName="02-02-02. 처리 대상 데이터 읽어오기" sap:VirtualizedContainerService.HintSize="200,108" sap2010:WorkflowViewState.IdRef="Sequence_17">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="reqFilePTH" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1005,51" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="무시된 액티비티" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="Assign - 요청 대상 엑셀 파일 경로" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[reqFilePTH]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_configDIC("PS_PATH_INPUT") + in_configDIC("FILE_NAME_REQUEST")]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+            <Assign DisplayName="Assign - 처리결과 엑셀 파일 경로" sap:VirtualizedContainerService.HintSize="1005,60" sap2010:WorkflowViewState.IdRef="Assign_11">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[resultFilePTH]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[in_configDIC("PS_PATH_TEMP")+in_configDIC("SAP_FILENAME_RESULT")]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If sap2010:Annotation.AnnotationText="처리결과 파일이 없을 경우 처리대상 파일의 내용을 읽어서 처리결과 파일을 생성함" Condition="[File.Exists(resultFilePTH)]" DisplayName="If - 처리결과 엑셀 파일이 있는지 확인" sap:VirtualizedContainerService.HintSize="1005,1502" sap2010:WorkflowViewState.IdRef="If_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Excel Application Scope - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="434,359" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_9" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[resultFilePTH]">
+                  <ui:ExcelApplicationScope.Body>
+                    <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                      </ActivityAction.Argument>
+                      <Sequence DisplayName="Do - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="376,250" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:ExcelReadRange AddHeaders="True" DataTable="[targetDT]" DisplayName="Read Range - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" SheetName="[ExcelWorkbookScope.GetSheets(0)]">
+                          <ui:ExcelReadRange.Range>
+                            <InArgument x:TypeArguments="x:String">
+                              <Literal x:TypeArguments="x:String" Value="" />
+                            </InArgument>
+                          </ui:ExcelReadRange.Range>
+                        </ui:ExcelReadRange>
+                        <ui:ExcelCloseWorkbook DisplayName="Close Workbook - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_9" Workbook="[ExcelWorkbookScope]" />
+                      </Sequence>
+                    </ActivityAction>
+                  </ui:ExcelApplicationScope.Body>
+                </ui:ExcelApplicationScope>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Sequence - 처리결과를 저장할 파일 생성" sap:VirtualizedContainerService.HintSize="526,1323" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Excel Application Scope - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="484,359" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_6" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[reqFilePTH]">
+                    <ui:ExcelApplicationScope.Body>
+                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="376,250" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ExcelReadRange AddHeaders="True" DataTable="[targetDT]" DisplayName="Read Range - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="[ExcelWorkbookScope.GetSheets(0)]">
+                            <ui:ExcelReadRange.Range>
+                              <InArgument x:TypeArguments="x:String">
+                                <Literal x:TypeArguments="x:String" Value="" />
+                              </InArgument>
+                            </ui:ExcelReadRange.Range>
+                          </ui:ExcelReadRange>
+                          <ui:ExcelCloseWorkbook DisplayName="Close Workbook - 요청 대상 엑셀 데이터 로드" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_6" Workbook="[ExcelWorkbookScope]" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ExcelApplicationScope.Body>
+                  </ui:ExcelApplicationScope>
+                  <If Condition="[targetDT.Columns.Contains(resultColumnNM)]" DisplayName="If - 처리결과 컬럼 존재 여부 확인" sap:VirtualizedContainerService.HintSize="484,208" sap2010:WorkflowViewState.IdRef="If_10">
+                    <If.Else>
+                      <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="[resultColumnNM]" DataTable="[targetDT]" DisplayName="Add Data Column - 처리결과" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" MaxLength="100" Unique="False" />
+                    </If.Else>
+                  </If>
+                  <ui:CopyFile ContinueOnError="{x:Null}" Destination="[resultFilePTH]" DisplayName="Copy File - 처리 결과 템플릿 복사" sap:VirtualizedContainerService.HintSize="484,157" sap2010:WorkflowViewState.IdRef="CopyFile_2" Overwrite="True" Path="[in_configDIC(&quot;PS_PATH_TEMPLATE&quot;) + in_configDIC(&quot;TEMPLATE_FILE_NAME_RESULT&quot;)]" />
+                  <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope - 처리결과 엑셀 데이터 저장" sap:VirtualizedContainerService.HintSize="484,387" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_10" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[resultFilePTH]">
+                    <ui:ExcelApplicationScope.Body>
+                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do - 처리결과 엑셀 데이터 저장" sap:VirtualizedContainerService.HintSize="376,278" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ExcelWriteRange AddHeaders="True" DataTable="[targetDT]" DisplayName="Write Range - 처리결과 엑셀 데이터 저장" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_7" SheetName="[ExcelWorkbookScope.GetSheets(0)]" StartingCell="A1" />
+                          <ui:ExcelCloseWorkbook DisplayName="Close Workbook - 처리결과 엑셀 데이터 저장" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_10" Workbook="[ExcelWorkbookScope]" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ExcelApplicationScope.Body>
+                  </ui:ExcelApplicationScope>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+          <FlowStep.Next>
+            <FlowStep x:Name="__ReferenceID2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <av:Point x:Key="ShapeLocation">200,410.5</av:Point>
+                  <av:Size x:Key="ShapeSize">200,108</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">300,518.5 300,553.5</av:PointCollection>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Sequence sap2010:Annotation.AnnotationText="실제 데이터 처리에 필요한 프로세스 부분 구현" DisplayName="02-02-03. 처리 프로세스 Step" sap:VirtualizedContainerService.HintSize="2705,6348" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="2663,491" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="3" RetryInterval="00:00:03">
+                  <ui:RetryScope.ActivityBody>
+                    <ActivityAction>
+                      <Sequence DisplayName="액션" sap:VirtualizedContainerService.HintSize="376,226" sap2010:WorkflowViewState.IdRef="Sequence_39">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'OkCodeField  okcd'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="/nZQM0054T[k(enter)]">
+                          <ui:TypeInto.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="931f11d0-6ca8-4b06-9dcd-b74b56094cb2" InformativeScreenshot="ef044dcbdec71513bbb14f438632dfcb" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='*' /&gt;&lt;sap id='tbar[0]/okcd' /&gt;">
+                              <ui:Target.TimeoutMS>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:Target.TimeoutMS>
+                              <ui:Target.WaitForReady>
+                                <InArgument x:TypeArguments="ui:WaitForReady" />
+                              </ui:Target.WaitForReady>
+                            </ui:Target>
+                          </ui:TypeInto.Target>
+                        </ui:TypeInto>
+                      </Sequence>
+                    </ActivityAction>
+                  </ui:RetryScope.ActivityBody>
+                  <ui:RetryScope.Condition>
+                    <ActivityFunc x:TypeArguments="x:Boolean">
+                      <ui:UiElementExists Exists="{x:Null}" DisplayName="Element Exists 'Titlebar &quot;MTR'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                        <ui:UiElementExists.Target>
+                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="a17d8f48-9321-41f7-95a2-9e74d8f6d32b" InformativeScreenshot="18eed4aff72e782b99cb00bbbce73c96" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='titl' /&gt;">
+                            <ui:Target.TimeoutMS>
+                              <InArgument x:TypeArguments="x:Int32" />
+                            </ui:Target.TimeoutMS>
+                            <ui:Target.WaitForReady>
+                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                            </ui:Target.WaitForReady>
+                          </ui:Target>
+                        </ui:UiElementExists.Target>
+                      </ui:UiElementExists>
+                    </ActivityFunc>
+                  </ui:RetryScope.Condition>
+                </ui:RetryScope>
+                <Sequence DisplayName="데이터 스크래핑" sap:VirtualizedContainerService.HintSize="2663,436" sap2010:WorkflowViewState.IdRef="Sequence_56">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'MTR       Sap_front'" sap:VirtualizedContainerService.HintSize="434,344" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="178c9345c332b325cf8d4b4ceadbf615" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;">
+                    <ui:WindowScope.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,198" sap2010:WorkflowViewState.IdRef="Sequence_55">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[sapMtrDT]" DisplayName="Extract Structured Data 'TableControl  MTR 보정치'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest' /&gt;" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ExtractData_2" MaxNumberOfResults="0" SimulateClick="True">
+                            <ui:ExtractData.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="fd37b097-ff19-435b-9dca-e6e210306a13" InformativeScreenshot="d3881c86af7c2a3b1783f878e60e331f" Selector="&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' /&gt;">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                                <ui:Target.WaitForReady>
+                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                </ui:Target.WaitForReady>
+                              </ui:Target>
+                            </ui:ExtractData.Target>
+                          </ui:ExtractData>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:WindowScope.Body>
+                  </ui:WindowScope>
+                </Sequence>
+                <TryCatch DisplayName="Try Catch - 처리 대상을 한 건씩 처리" sap:VirtualizedContainerService.HintSize="2663,3992" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+                  <TryCatch.Variables>
+                    <Variable x:TypeArguments="x:Int32" Name="rowIDX" />
+                  </TryCatch.Variables>
+                  <TryCatch.Try>
+                    <Sequence sap:VirtualizedContainerService.HintSize="2625,3765" sap2010:WorkflowViewState.IdRef="Sequence_58">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:ForEachRow CurrentIndex="[rowIDX]" DataTable="[sapMtrDT]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="2583,3673" sap2010:WorkflowViewState.IdRef="ForEachRow_6">
+                        <ui:ForEachRow.Body>
+                          <ActivityAction x:TypeArguments="sd:DataRow">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="sd:DataRow" Name="sapRow" />
+                            </ActivityAction.Argument>
+                            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="2533,3525" sap2010:WorkflowViewState.IdRef="Sequence_57">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:LogMessage DisplayName="Log Message - 현재 처리 대상 정보 출력" sap:VirtualizedContainerService.HintSize="2491,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[(rowIDX+1).ToString + &quot;/&quot; + sapMtrDT.Rows.Count.ToString + &quot; 처리 중&quot; + &quot; - &quot; + String.Join(&quot;, &quot;, sapRow.ItemArray)]" />
+                              <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[targetDT]" DisplayName="For Each Row - 처리 대상을 한 건씩 처리" sap:VirtualizedContainerService.HintSize="2491,3302" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                                <ui:ForEachRow.Body>
+                                  <ActivityAction x:TypeArguments="sd:DataRow">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Body - 처리 대상을 한 건씩 처리" sap:VirtualizedContainerService.HintSize="2441,3154" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:ShouldStop DisplayName="Check Stop Signal" sap:VirtualizedContainerService.HintSize="2399,22" sap2010:WorkflowViewState.IdRef="ShouldStop_2" Result="[isStopYN]">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:ShouldStop>
+                                      <If sap2010:Annotation.AnnotationText="오케스트레이터에서 Stop 버튼을 눌렀을 경우 현재까지 처리한 결과를 저장하고 처리 중단" Condition="[isStopYN]" DisplayName="If - 오케스트레이터에서 Stop 버튼을 눌렀는지 여부 확인" sap:VirtualizedContainerService.HintSize="2399,123" sap2010:WorkflowViewState.IdRef="If_8">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <If.Then>
+                                          <Sequence DisplayName="Sequence - 현재까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="436,605" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope - 현재까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="414,419" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_11" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[resultFilePTH]">
+                                              <ui:ExcelApplicationScope.Body>
+                                                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                                  <ActivityAction.Argument>
+                                                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                                  </ActivityAction.Argument>
+                                                  <Sequence DisplayName="Do - 현재까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="336,310" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                    <ui:ExcelWriteRange AddHeaders="True" DataTable="[targetDT]" DisplayName="Write Range - 현재까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_8" SheetName="[ExcelWorkbookScope.GetSheets(0)]" StartingCell="A1" />
+                                                    <ui:ExcelCloseWorkbook DisplayName="Close Workbook - 현재까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_11" Workbook="[ExcelWorkbookScope]" />
+                                                  </Sequence>
+                                                </ActivityAction>
+                                              </ui:ExcelApplicationScope.Body>
+                                            </ui:ExcelApplicationScope>
+                                            <ui:Break DisplayName="Break - Stop 버튼을 눌렀을 경우 처리 중단" sap:VirtualizedContainerService.HintSize="414,22" sap2010:WorkflowViewState.IdRef="Break_3" />
+                                          </Sequence>
+                                        </If.Then>
+                                      </If>
+                                      <If Condition="[String.IsNullOrEmpty(row(resultColumnNM).ToString)]" DisplayName="If - 이미 처리 완료한 건인지 확인" sap:VirtualizedContainerService.HintSize="2399,208" sap2010:WorkflowViewState.IdRef="If_9">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <If.Else>
+                                          <ui:Continue DisplayName="Continue - 이미 처리한 건은 Skip" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Continue_2" />
+                                        </If.Else>
+                                      </If>
+                                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="2399,261" sap2010:WorkflowViewState.IdRef="CommentOut_6">
+                                        <ui:CommentOut.Body>
+                                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,183" sap2010:WorkflowViewState.IdRef="Sequence_64">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ui:LogMessage DisplayName="Log Message - 현재 처리 대상 정보 출력" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[(rowIDX+1).ToString + &quot;/&quot; + targetDT.Rows.Count.ToString + &quot; 처리 중&quot; + &quot; - &quot; + String.Join(&quot;, &quot;, row.ItemArray)]" />
+                                          </Sequence>
+                                        </ui:CommentOut.Body>
+                                      </ui:CommentOut>
+                                      <ui:Comment sap:VirtualizedContainerService.HintSize="2399,74" sap2010:WorkflowViewState.IdRef="Comment_3" Text="실제 데이터 처리에 필요한 프로세스 부분 구현" />
+                                      <If Condition="[row(&quot;방향&quot;).ToString.Equals(&quot;Stripe 모재 L방향&quot;)]" sap:VirtualizedContainerService.HintSize="2399,540" sap2010:WorkflowViewState.IdRef="If_19">
+                                        <If.Then>
+                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_28">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Object">[row("방향")]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Object">["L"]</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                        </If.Then>
+                                        <If.Else>
+                                          <Sequence sap:VirtualizedContainerService.HintSize="526,392" sap2010:WorkflowViewState.IdRef="Sequence_61">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If Condition="[row(&quot;방향&quot;).ToString.Equals(&quot;Stripe 모재 T방향&quot;)]" sap:VirtualizedContainerService.HintSize="484,300" sap2010:WorkflowViewState.IdRef="If_18">
+                                              <If.Then>
+                                                <Sequence sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_60">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_29">
+                                                    <Assign.To>
+                                                      <OutArgument x:TypeArguments="x:Object">[row("방향")]</OutArgument>
+                                                    </Assign.To>
+                                                    <Assign.Value>
+                                                      <InArgument x:TypeArguments="x:Object">["T"]</InArgument>
+                                                    </Assign.Value>
+                                                  </Assign>
+                                                </Sequence>
+                                              </If.Then>
+                                            </If>
+                                          </Sequence>
+                                        </If.Else>
+                                      </If>
+                                      <If Condition="[string.IsNullOrEmpty(sapRow(&quot;MAKER&quot;).ToString) and string.IsNullOrEmpty(row(&quot;MAKER&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="2399,1594" sap2010:WorkflowViewState.IdRef="If_20">
+                                        <If.Then>
+                                          <If Condition="[sapRow(&quot;기호&quot;).Equals(row(&quot;기호&quot;)) and sapRow(&quot;방향&quot;).Equals(row(&quot;방향&quot;))]" sap:VirtualizedContainerService.HintSize="1177,1446" sap2010:WorkflowViewState.IdRef="If_23">
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="1032,1298" sap2010:WorkflowViewState.IdRef="Sequence_63">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <If Condition="[string.IsNullOrEmpty(row(&quot;시험횟수&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="990,1144" sap2010:WorkflowViewState.IdRef="If_22">
+                                                  <If.Then>
+                                                    <Assign DisplayName="Assign - 처리결과 업데이트 : 처리완료" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                                      <Assign.To>
+                                                        <OutArgument x:TypeArguments="x:Object">[row(resultColumnNM)]</OutArgument>
+                                                      </Assign.To>
+                                                      <Assign.Value>
+                                                        <InArgument x:TypeArguments="x:Object">["미처리"]</InArgument>
+                                                      </Assign.Value>
+                                                    </Assign>
+                                                  </If.Then>
+                                                  <If.Else>
+                                                    <If Condition="[CINT(row(&quot;시험횟수&quot;)) &gt; 9]" sap:VirtualizedContainerService.HintSize="683,996" sap2010:WorkflowViewState.IdRef="If_21">
+                                                      <If.Then>
+                                                        <Sequence sap:VirtualizedContainerService.HintSize="376,848" sap2010:WorkflowViewState.IdRef="Sequence_62">
+                                                          <sap:WorkflowViewStateService.ViewState>
+                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                            </scg:Dictionary>
+                                                          </sap:WorkflowViewStateService.ViewState>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_5" Text="[row(&quot;YS(FROM)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="b452a89ad16246834c66a5ad77177674" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='4' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_6" Text="[row(&quot;YS(TO)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="fe9022c0c90c08182a7284f284595f65" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='5' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_7" Text="[row(&quot;TS(FROM)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="1e20b3590ddc66ba596af7224a504277" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='6' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_8" Text="[row(&quot;TS(TO)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="1e20b3590ddc66ba596af7224a504277" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='7' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <Assign DisplayName="Assign - 처리결과 업데이트 : 처리완료" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_31">
+                                                            <Assign.To>
+                                                              <OutArgument x:TypeArguments="x:Object">[row(resultColumnNM)]</OutArgument>
+                                                            </Assign.To>
+                                                            <Assign.Value>
+                                                              <InArgument x:TypeArguments="x:Object">["설정완료"]</InArgument>
+                                                            </Assign.Value>
+                                                          </Assign>
+                                                        </Sequence>
+                                                      </If.Then>
+                                                      <If.Else>
+                                                        <Assign DisplayName="Assign - 처리결과 업데이트 : 처리완료" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_32">
+                                                          <Assign.To>
+                                                            <OutArgument x:TypeArguments="x:Object">[row(resultColumnNM)]</OutArgument>
+                                                          </Assign.To>
+                                                          <Assign.Value>
+                                                            <InArgument x:TypeArguments="x:Object">["시험횟수 미달"]</InArgument>
+                                                          </Assign.Value>
+                                                        </Assign>
+                                                      </If.Else>
+                                                    </If>
+                                                  </If.Else>
+                                                </If>
+                                                <ui:Continue sap:VirtualizedContainerService.HintSize="990,22" sap2010:WorkflowViewState.IdRef="Continue_4" />
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                        </If.Then>
+                                        <If.Else>
+                                          <If Condition="[sapRow(&quot;기호&quot;).Equals(row(&quot;기호&quot;)) and sapRow(&quot;방향&quot;).Equals(row(&quot;방향&quot;)) and sapRow(&quot;MAKER&quot;).Equals(row(&quot;MAKER&quot;))]" sap:VirtualizedContainerService.HintSize="1177,1446" sap2010:WorkflowViewState.IdRef="If_17">
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="1032,1298" sap2010:WorkflowViewState.IdRef="Sequence_59">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <If Condition="[string.IsNullOrEmpty(row(&quot;시험횟수&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="990,1144" sap2010:WorkflowViewState.IdRef="If_12">
+                                                  <If.Then>
+                                                    <Assign DisplayName="Assign - 처리결과 업데이트 : 처리완료" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+                                                      <Assign.To>
+                                                        <OutArgument x:TypeArguments="x:Object">[row(resultColumnNM)]</OutArgument>
+                                                      </Assign.To>
+                                                      <Assign.Value>
+                                                        <InArgument x:TypeArguments="x:Object">["미처리"]</InArgument>
+                                                      </Assign.Value>
+                                                    </Assign>
+                                                  </If.Then>
+                                                  <If.Else>
+                                                    <If Condition="[CINT(row(&quot;시험횟수&quot;)) &gt; 9]" sap:VirtualizedContainerService.HintSize="683,996" sap2010:WorkflowViewState.IdRef="If_11">
+                                                      <If.Then>
+                                                        <Sequence sap:VirtualizedContainerService.HintSize="376,848" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                                                          <sap:WorkflowViewStateService.ViewState>
+                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                            </scg:Dictionary>
+                                                          </sap:WorkflowViewStateService.ViewState>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_1" Text="[row(&quot;YS(FROM)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="b452a89ad16246834c66a5ad77177674" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='4' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_2" Text="[row(&quot;YS(TO)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="fe9022c0c90c08182a7284f284595f65" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='5' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_3" Text="[row(&quot;TS(FROM)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="1e20b3590ddc66ba596af7224a504277" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='6' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <ui:SetValue AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Set Text 'TextField  YS(FROM)'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="SetValue_4" Text="[row(&quot;TS(TO)적용&quot;).ToString]">
+                                                            <ui:SetValue.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8f43099f-6bed-4227-b6b4-53691529dbec" InformativeScreenshot="1e20b3590ddc66ba596af7224a504277" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='usr/tblSAPLZQM001TCTRL_ZQM0054T' tableCol='7' tableRow='{{rowIDX}}' /&gt;">
+                                                                <ui:Target.TimeoutMS>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:Target.TimeoutMS>
+                                                                <ui:Target.WaitForReady>
+                                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                </ui:Target.WaitForReady>
+                                                              </ui:Target>
+                                                            </ui:SetValue.Target>
+                                                          </ui:SetValue>
+                                                          <Assign DisplayName="Assign - 처리결과 업데이트 : 처리완료" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                                                            <Assign.To>
+                                                              <OutArgument x:TypeArguments="x:Object">[row(resultColumnNM)]</OutArgument>
+                                                            </Assign.To>
+                                                            <Assign.Value>
+                                                              <InArgument x:TypeArguments="x:Object">["설정완료"]</InArgument>
+                                                            </Assign.Value>
+                                                          </Assign>
+                                                        </Sequence>
+                                                      </If.Then>
+                                                      <If.Else>
+                                                        <Assign DisplayName="Assign - 처리결과 업데이트 : 처리완료" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+                                                          <Assign.To>
+                                                            <OutArgument x:TypeArguments="x:Object">[row(resultColumnNM)]</OutArgument>
+                                                          </Assign.To>
+                                                          <Assign.Value>
+                                                            <InArgument x:TypeArguments="x:Object">["시험횟수 미달"]</InArgument>
+                                                          </Assign.Value>
+                                                        </Assign>
+                                                      </If.Else>
+                                                    </If>
+                                                  </If.Else>
+                                                </If>
+                                                <ui:Continue sap:VirtualizedContainerService.HintSize="990,22" sap2010:WorkflowViewState.IdRef="Continue_3" />
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                        </If.Else>
+                                      </If>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:ForEachRow.Body>
+                              </ui:ForEachRow>
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:ForEachRow.Body>
+                      </ui:ForEachRow>
+                    </Sequence>
+                  </TryCatch.Try>
+                  <TryCatch.Catches>
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="2629,21" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ActivityAction x:TypeArguments="s:Exception">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Sequence - 에러 발생 시 처리" sap:VirtualizedContainerService.HintSize="476,501" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope - 에러 발생까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="434,387" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_7" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[resultFilePTH]">
+                            <ui:ExcelApplicationScope.Body>
+                              <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Do - 에러 발생까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="376,278" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:ExcelWriteRange AddHeaders="True" DataTable="[targetDT]" DisplayName="Write Range - 에러 발생까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="[ExcelWorkbookScope.GetSheets(0)]" StartingCell="A1" />
+                                  <ui:ExcelCloseWorkbook DisplayName="Close Workbook - 에러 발생까지 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_7" Workbook="[ExcelWorkbookScope]" />
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:ExcelApplicationScope.Body>
+                          </ui:ExcelApplicationScope>
+                          <Rethrow DisplayName="Rethrow - 에러 재 발생시킴" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
+                        </Sequence>
+                      </ActivityAction>
+                    </Catch>
+                  </TryCatch.Catches>
+                </TryCatch>
+                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope - 최종 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="2663,387" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_8" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[resultFilePTH]">
+                  <ui:ExcelApplicationScope.Body>
+                    <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                      </ActivityAction.Argument>
+                      <Sequence DisplayName="Do - 최종 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="376,278" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:ExcelWriteRange AddHeaders="True" DataTable="[targetDT]" DisplayName="Write Range - 최종 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_6" SheetName="[ExcelWorkbookScope.GetSheets(0)]" StartingCell="A1" />
+                        <ui:ExcelCloseWorkbook DisplayName="Close Workbook - 최종 처리한 내역 엑셀 업데이트" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_8" Workbook="[ExcelWorkbookScope]" />
+                      </Sequence>
+                    </ActivityAction>
+                  </ui:ExcelApplicationScope.Body>
+                </ui:ExcelApplicationScope>
+                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[in_configDIC(&quot;PS_PATH_OUTPUT&quot;)+in_configDIC(&quot;SAP_FILENAME_RESULT&quot;)]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="2663,157" sap2010:WorkflowViewState.IdRef="CopyFile_3" Overwrite="True" Path="[resultFilePTH]" />
+                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[in_configDIC(&quot;PS_PATH_OUTPUT&quot;) + in_configDIC(&quot;FILE_NAME_EXCEL_DOWN&quot;)]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="2663,157" sap2010:WorkflowViewState.IdRef="CopyFile_4" Overwrite="True" Path="[in_configDIC(&quot;PS_PATH_TEMP&quot;) + in_configDIC(&quot;FILE_NAME_EXCEL_DOWN&quot;)]" />
+                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[in_configDIC(&quot;PS_PATH_OUTPUT&quot;) + in_configDIC(&quot;FILE_NAME_DEVIATION&quot;)]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="2663,157" sap2010:WorkflowViewState.IdRef="CopyFile_5" Overwrite="True" Path="[in_configDIC(&quot;PS_PATH_TEMP&quot;) + in_configDIC(&quot;FILE_NAME_DEVIATION&quot;)]" />
+                <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Button  저장 (Ctrl+S)'" sap:VirtualizedContainerService.HintSize="2663,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                  <ui:Click.CursorPosition>
+                    <ui:CursorPosition Position="Center">
+                      <ui:CursorPosition.OffsetX>
+                        <InArgument x:TypeArguments="x:Int32" />
+                      </ui:CursorPosition.OffsetX>
+                      <ui:CursorPosition.OffsetY>
+                        <InArgument x:TypeArguments="x:Int32" />
+                      </ui:CursorPosition.OffsetY>
+                    </ui:CursorPosition>
+                  </ui:Click.CursorPosition>
+                  <ui:Click.Target>
+                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="310aaf72-e23f-450f-beee-92d0639c08be" InformativeScreenshot="00c6ba36ecd72df80fe3a1f858af582d" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='&amp;quot;MTR 보정치&amp;quot; 뷰 변경: 개요' /&gt;&lt;sap id='tbar[0]/btn[11]' /&gt;">
+                      <ui:Target.TimeoutMS>
+                        <InArgument x:TypeArguments="x:Int32" />
+                      </ui:Target.TimeoutMS>
+                      <ui:Target.WaitForReady>
+                        <InArgument x:TypeArguments="ui:WaitForReady" />
+                      </ui:Target.WaitForReady>
+                    </ui:Target>
+                  </ui:Click.Target>
+                </ui:Click>
+                <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill Process - sap logon" sap:VirtualizedContainerService.HintSize="2663,22" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="SAP Logon 740" />
+              </Sequence>
+              <FlowStep.Next>
+                <FlowStep x:Name="__ReferenceID0">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">200,553.5</av:Point>
+                      <av:Size x:Key="ShapeSize">200,108</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">210,490 280,490</av:PointCollection>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence sap2010:Annotation.AnnotationText="프로세스 수행 성공 로깅 처리" DisplayName="02-02-04. 프로세스 수행 성공" sap:VirtualizedContainerService.HintSize="200,108" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If Condition="[isStopYN]" DisplayName="If - 오케스트레이터에서 Stop 버튼을 눌렀는지 여부 확인" sap:VirtualizedContainerService.HintSize="719,829" sap2010:WorkflowViewState.IdRef="If_4">
+                      <If.Then>
+                        <Sequence DisplayName="Sequence- 오케스트레이터에서 Stop 버튼을 눌렀을 경우 처리" sap:VirtualizedContainerService.HintSize="358,681" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Sequence sap2010:Annotation.AnnotationText="Successful logging for workblock. &#xA;You should also publish the output arguments that you want to make available in the log." DisplayName="wb Logging Stop" sap:VirtualizedContainerService.HintSize="336,495" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:AddLogFields sap2010:Annotation.AnnotationText="Default wb fields&#xA;wbStatus&#xA;wbState&#xA;wbDurationSec" DisplayName="Publish default wb fields" sap:VirtualizedContainerService.HintSize="314,94" sap2010:WorkflowViewState.IdRef="AddLogFields_3">
+                              <ui:AddLogFields.Fields>
+                                <InArgument x:TypeArguments="x:String" x:Key="wbStatus">Stop</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="wbState">Ended</InArgument>
+                                <InArgument x:TypeArguments="x:Double" x:Key="wbDurationSec">[convert.ToDouble(now.Subtract(wbStartTime).TotalSeconds)]</InArgument>
+                              </ui:AddLogFields.Fields>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:AddLogFields>
+                            <ui:AddLogFields sap2010:Annotation.AnnotationText="Publish output fields" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="314,49" sap2010:WorkflowViewState.IdRef="AddLogFields_4">
+                              <ui:AddLogFields.Fields>
+                                <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+                              </ui:AddLogFields.Fields>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:AddLogFields>
+                            <ui:LogMessage DisplayName="Log execution ended message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[wbPath + &quot; execution ended with stop.&quot;]" />
+                          </Sequence>
+                          <Throw DisplayName="Throw - Stop 버튼을 눌렀을 경우 에러 처리" Exception="[New UiPath.Core.BusinessRuleException(&quot;오케스트레이터에서 STOP 버튼을 눌러서 프로세스 중단&quot;)]" sap:VirtualizedContainerService.HintSize="336,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence sap2010:Annotation.AnnotationText="Successful logging for workblock. &#xA;You should also publish the output arguments that you want to make available in the log." DisplayName="wb Logging Successful" sap:VirtualizedContainerService.HintSize="336,495" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:AddLogFields sap2010:Annotation.AnnotationText="Default wb fields&#xA;wbStatus&#xA;wbState&#xA;wbDurationSec" DisplayName="Publish default wb fields" sap:VirtualizedContainerService.HintSize="314,94" sap2010:WorkflowViewState.IdRef="AddLogFields_5">
+                            <ui:AddLogFields.Fields>
+                              <InArgument x:TypeArguments="x:String" x:Key="wbStatus">Successful</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="wbState">Ended</InArgument>
+                              <InArgument x:TypeArguments="x:Double" x:Key="wbDurationSec">[convert.ToDouble(now.Subtract(wbStartTime).TotalSeconds)]</InArgument>
+                            </ui:AddLogFields.Fields>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:AddLogFields>
+                          <ui:AddLogFields sap2010:Annotation.AnnotationText="Publish output fields" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="314,49" sap2010:WorkflowViewState.IdRef="AddLogFields_6">
+                            <ui:AddLogFields.Fields>
+                              <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+                            </ui:AddLogFields.Fields>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:AddLogFields>
+                          <ui:LogMessage DisplayName="Log execution ended message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[wbPath + &quot; execution ended with success.&quot;]" />
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </FlowStep>
+              </FlowStep.Next>
+            </FlowStep>
+          </FlowStep.Next>
+        </FlowStep>
+      </FlowStep.Next>
+    </FlowStep>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+  </Flowchart>
+</Activity>
